@@ -64,7 +64,6 @@ brew install --cask macdown
 brew install --cask microsoft-office
 brew install --cask postman
 brew install --cask slack
-brew install --cask sourcetree
 brew install --cask spotify
 brew install --cask sublime-text
 brew install --cask visual-studio-code
@@ -90,8 +89,6 @@ brew install --cask intellij-idea-ce
 echo -e "Configuring ${BLUE}Node${NO_COLOR}...."
 
 # Install nvm
-brew uninstall --ignore-dependencies node 
-brew uninstall --force node 
 brew update 
 brew install nvm 
 mkdir ~/.nvm 
@@ -222,7 +219,7 @@ pbcopy < ~/.ssh/id_ed25519.pub
 echo ""
 echo "Public key is copied to the clipboard and is ready to paste in Github...."
 echo "${RED}You must paste in the key to Github, as upcoming steps require the pull of private repositories...${NO_COLOR}"
-read -p "Press any key to continue... " -n1 -s
+read "?Press any key to continue after setting up the key in GitHub ..."
 
 ############################
 # Command Line Tools
@@ -261,7 +258,6 @@ brew install --cask google-cloud-sdk
 echo "$DIVIDER"
 echo -e "Configuring ${BLUE}dotfiles${NO_COLOR}"
 
-echo ".cfg" >> .gitignore
 git clone --bare git@github.com:davidtucker/dotfiles.git $HOME/.cfg
 /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME checkout
 /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME config --local status.showUntrackedFiles no
