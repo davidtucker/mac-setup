@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 ###############################
 # Mac Initial Setup Script
@@ -52,10 +52,13 @@ fi
 
 # Doesn't currently work with Apple Silicon
 # brew install --cask adobe-creative-cloud
+
+brew install --cask 1password
 brew install --cask bartender
 brew install --cask docker
 brew install --cask firefox
 brew install --cask google-chrome
+brew install --cask hammerspoon
 brew install --cask iterm2
 brew install --cask macdown
 brew install --cask microsoft-office
@@ -87,10 +90,16 @@ brew install --cask intellij-idea-ce
 echo -e "Configuring ${BLUE}Node${NO_COLOR}...."
 
 # Install nvm
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-nvm install node
-nvm use node
-source ~/.zshrc
+brew uninstall --ignore-dependencies node 
+brew uninstall --force node 
+brew update 
+brew install nvm 
+mkdir ~/.nvm 
+
+echo '' >> ~/.zshrc
+echo '# NVM Configuration' >> ~/.zshrc
+echo 'export NVM_DIR=~/.nvm' >> ~/.zshrc
+echo 'source $(brew --prefix nvm)/nvm.sh' >> ~/.zshrc
 
 # Global Node Modules
 npm install -g yarn
@@ -229,7 +238,7 @@ sudo installer -pkg ~/Downloads/AWSCLIV2.pkg -target /
 # Install Session Manager for AWS CLI
 curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/mac/session-manager-plugin.pkg" -o "session-manager-plugin.pkg"
 sudo installer -pkg session-manager-plugin.pkg -target /
-mkdir /usr/local/bin
+mkdir -p /usr/local/bin
 sudo ln -s /usr/local/sessionmanagerplugin/bin/session-manager-plugin /usr/local/bin/session-manager-plugin
 
 # Install AWS SAM
@@ -252,15 +261,22 @@ brew install --cask google-cloud-sdk
 echo "$DIVIDER"
 echo -e "Configuring ${BLUE}dotfiles${NO_COLOR}"
 
-echo "alias dotfiles='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'" >> ~/.zshrc
 echo ".cfg" >> .gitignore
 git clone --bare git@github.com:davidtucker/dotfiles.git $HOME/.cfg
-source ~/.zshrc
-dotfiles checkout
-dotfiles config --local status.showUntrackedFiles no
+/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME checkout
+/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME config --local status.showUntrackedFiles no
 
-# Update PATH
+echo '' >> ~/.zshrc
+echo '# Dotfiles' >> ~/.zshrc
+echo "alias dotfiles='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'" >> ~/.zshrc
+
+# Update PATH and Source .zshrc
+echo '' >> ~/.zshrc
+echo '# Path' >> ~/.zshrc
 echo 'export PATH="/opt/homebrew/opt/openjdk/bin:/usr/local/bin:$PATH"' >> ~/.zshrc
+
+# Open iTerm2
+open -a /Applications/iTerm.app
 
 echo "$DIVIDER"
 echo -e "${BLUE}Installation Complete${NO_COLOR}"
