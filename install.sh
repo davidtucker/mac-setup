@@ -50,9 +50,7 @@ fi
 # Other Applications
 ############################
 
-# Doesn't currently work with Apple Silicon
-# brew install --cask adobe-creative-cloud
-
+brew install --cask adobe-creative-cloud
 brew install --cask 1password
 brew install --cask bartender
 brew install --cask docker
@@ -108,7 +106,11 @@ npm install -g yarn
 echo -e "Configuring ${BLUE}Python${NO_COLOR}...."
 
 # Install Apple-silicon supported version of Python
-brew install python@3.9
+brew install miniforge
+conda init zsh
+source ~/.zshrc
+conda create -n main python=3.9.7
+conda activate main
 
 # Cleanup
 brew cleanup
@@ -219,7 +221,7 @@ pbcopy < ~/.ssh/id_ed25519.pub
 echo ""
 echo "Public key is copied to the clipboard and is ready to paste in Github...."
 echo "${RED}You must paste in the key to Github, as upcoming steps require the pull of private repositories...${NO_COLOR}"
-read "?Press any key to continue after setting up the key in GitHub ..."
+read "?Press RETURN to continue after setting up the key in GitHub ..."
 
 ############################
 # Command Line Tools
@@ -273,6 +275,7 @@ echo 'export PATH="/opt/homebrew/opt/openjdk/bin:/usr/local/bin:$PATH"' >> ~/.zs
 
 # Open iTerm2
 open -a /Applications/iTerm.app
+open -a /Applications/Hammerspoon.app
 
 echo "$DIVIDER"
 echo -e "${BLUE}Installation Complete${NO_COLOR}"
