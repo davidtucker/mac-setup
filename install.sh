@@ -24,8 +24,9 @@ echo -e "Installing ${RED}Homebrew${NO_COLOR} and applications....."
 
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
 if [[ $(uname -p) == 'arm' ]]; then
-  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zshrc
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
@@ -87,14 +88,9 @@ brew install --cask intellij-idea-ce
 echo -e "Configuring ${BLUE}Node${NO_COLOR}...."
 
 # Install nvm
-brew update 
-brew install nvm 
-mkdir ~/.nvm 
-
-echo '' >> ~/.zshrc
-echo '# NVM Configuration' >> ~/.zshrc
-echo 'export NVM_DIR=~/.nvm' >> ~/.zshrc
-echo 'source $(brew --prefix nvm)/nvm.sh' >> ~/.zshrc
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | /bin/zsh
+source ~/.zshrc
+nvm install --lts 
 
 # Global Node Modules
 npm install -g yarn
