@@ -54,17 +54,25 @@ fi
 brew install --cask adobe-creative-cloud
 brew install --cask 1password
 brew install --cask bartender
+brew install --cask discord
 brew install --cask docker
 brew install --cask firefox
 brew install --cask google-chrome
 brew install --cask hammerspoon
 brew install --cask iterm2
+brew install --cask logos
 brew install --cask macdown
 brew install --cask microsoft-office
+brew install --cask microsoft-teams
+brew install --cask nordvpn
+brew install --cask obs
 brew install --cask postman
+brew install --cask screenflick
 brew install --cask slack
+brew install --cask softraid
 brew install --cask spotify
 brew install --cask sublime-text
+brew install --cask todoist
 brew install --cask visual-studio-code
 brew install --cask zoom
 
