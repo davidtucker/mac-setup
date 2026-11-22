@@ -1,0 +1,68 @@
+# Git settings shared by every Mac. Your name and email are in ~/.gitconfig,
+# which setup writes and which isn't in this repo.
+
+[init]
+	defaultBranch = main
+
+[core]
+	pager = delta
+	editor = code --new-window --wait
+	autocrlf = input
+
+[alias]
+	st = status
+	ss = status --short
+	co = checkout
+	br = branch
+	ci = commit
+	amend = commit -a --amend
+	egc = config --global -e
+	elc = config --local -e
+	esc = config --system -e
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true
+
+[diff]
+	colorMoved = default
+	tool = vscode
+
+[difftool]
+	prompt = false
+
+[difftool "vscode"]
+	cmd = code --wait --diff "$LOCAL" "$REMOTE"
+
+# Diff images by their metadata. Turn it on per repo in .gitattributes,
+# e.g.: *.jpg diff=exif
+[diff "exif"]
+	textconv = exiftool
+
+[merge]
+	conflictStyle = zdiff3
+	tool = vscode
+
+[mergetool]
+	keepBackup = false
+
+[mergetool "vscode"]
+	cmd = code --wait "$MERGED"
+
+[push]
+	autoSetupRemote = true
+	recurseSubmodules = on-demand
+
+[status]
+	submoduleSummary = true
+
+[fetch]
+	prune = true
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

@@ -1,0 +1,6 @@
+# Ignored in every repo on this Mac.
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+*.swp

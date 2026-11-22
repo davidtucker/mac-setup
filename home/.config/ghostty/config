@@ -1,0 +1,20 @@
+# Ghostty settings. Every option, with docs: ghostty +show-config --default --docs
+# Reload after editing: Cmd-Shift-,
+
+# Themes: ghostty +list-themes. One for light mode and one for dark:
+# theme = light:Rose Pine Dawn,dark:Rose Pine
+
+font-size = 14
+window-padding-x = 8
+window-padding-y = 6
+
+# Reopen your windows and tabs after quitting
+window-save-state = always
+
+# Left Option acts as Alt (word jumps in the shell); right Option still types
+# special characters
+macos-option-as-alt = left
+
+# Over SSH, send Ghostty's terminal description to the server so it doesn't
+# show "unknown terminal type"
+shell-integration-features = ssh-terminfo,ssh-env
