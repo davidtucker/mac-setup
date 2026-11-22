@@ -17,6 +17,7 @@ brew "git-delta"            # readable diffs; set as git's pager in home/.config
 brew "bat"                  # cat with syntax highlighting
 brew "btop"                 # process and resource monitor
 brew "direnv"               # per-directory environment variables (.envrc)
+brew "exiftool"             # image metadata; git diffs images with it (diff=exif)
 brew "eza"                  # ls with git status (ll, la, lt aliases)
 brew "fd"                   # faster, friendlier find
 brew "fzf"                  # fuzzy finder: Ctrl-R history, Ctrl-T files
