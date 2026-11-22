@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+  workflow_dispatch:
+  # Weekly, to catch casks that are renamed, deprecated or removed upstream
+  # before the next new Mac does.
+  schedule:
+    - cron: "17 14 * * 1"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: ShellCheck
+        run: shellcheck --external-sources bootstrap.sh setup.sh scripts/lib.sh scripts/steps/*.sh .github/scripts/*.sh
+      - name: Check zsh config syntax
+        run: |
+          sudo apt-get install -y -qq zsh >/dev/null
+          zsh -n home/.zshrc home/.zprofile
+
+  brewfile:
+    name: Brewfile entries exist
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: .github/scripts/check-brewfile.sh Brewfile
+
+  setup:
+    name: Setup runs on macOS
+    runs-on: macos-latest
+    env:
+      SETUP_COMPUTER_NAME: CI Mac
+      SETUP_GIT_NAME: CI
+      SETUP_GIT_EMAIL: ci@example.com
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # Runs under macOS's own /bin/bash 3.2, like on a new Mac.
+      - name: Dry run of every step
+        run: ./setup.sh --dry-run --non-interactive
+      # The steps that are quick and don't need an App Store or GitHub sign-in.
+      - name: Real run of the light steps
+        run: ./setup.sh --non-interactive macos dotfiles
+      - name: Second run changes nothing
+        run: |
+          ./setup.sh --non-interactive macos dotfiles | tee second-run.log
+          if grep -E "Linked|Moved the existing|Wrote" second-run.log; then
+            echo "::error::The second run changed files; a step isn't idempotent."
+            exit 1
+          fi
+      - name: Config files are linked and load
+        run: |
+          for f in .zshrc .zprofile .config/git/config .config/ghostty/config .config/mise/config.toml; do
+            test -L "$HOME/$f" || { echo "::error::$HOME/$f isn't a symlink"; exit 1; }
+          done
+          test "$(git config --file "$HOME/.gitconfig" user.email)" = ci@example.com
+          zsh -lic 'echo "zsh loaded"' </dev/null
+          grep -q pam_tid.so /etc/pam.d/sudo_local

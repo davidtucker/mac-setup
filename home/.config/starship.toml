@@ -1,0 +1,7 @@
+# Prompt settings. Docs: https://starship.rs/config/
+# Starship's defaults already show git status, language versions in a project,
+# and your AWS profile when one is set. Change things here.
+"$schema" = "https://starship.rs/config-schema.json"
+
+# Give slow commands (big git repos) more time before the prompt gives up on them
+command_timeout = 1000

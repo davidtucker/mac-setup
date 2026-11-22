@@ -1,0 +1,14 @@
+# Default language versions everywhere on this Mac. A project can pin its own
+# in mise.toml, .nvmrc, .python-version or rust-toolchain.toml.
+# After changing a version here, run: mise install
+
+[tools]
+node = "lts"
+python = "3.14"
+java = "temurin-25"   # current LTS
+go = "latest"
+rust = "stable"
+
+[settings]
+# Also read version files from other tools (.nvmrc, .node-version, .python-version)
+idiomatic_version_file_enable_tools = ["node", "python"]
