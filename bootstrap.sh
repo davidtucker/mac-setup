@@ -26,7 +26,7 @@ sudo -v
 
 # Keep sudo's cached password fresh while Homebrew installs. setup.sh, which
 # replaces this process below, keeps it fresh from then on.
-( while kill -0 "$$" 2>/dev/null; do sudo -n true 2>/dev/null; sleep 50; done ) &
+( while kill -0 "$$" 2>/dev/null; do sudo -n true 2>/dev/null; sleep 50; done ) >/dev/null 2>&1 &
 
 if [ ! -x /opt/homebrew/bin/brew ]; then
   echo "==> Installing Homebrew and Apple's command-line tools"

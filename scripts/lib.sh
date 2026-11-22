@@ -177,12 +177,14 @@ start_sudo_keepalive() {
   dry && return 0
   info "Some steps need administrator rights, so macOS will ask for your password."
   sudo -v || die "Couldn't get administrator rights."
+  # Its output goes to /dev/null so it never holds this script's stdout open
+  # (otherwise `./setup.sh | tee log` waits for its last sleep to end).
   (
     while kill -0 "$$" 2>/dev/null; do
       sudo -n true 2>/dev/null
       sleep 50
     done
-  ) &
+  ) >/dev/null 2>&1 &
   SUDO_KEEPALIVE_PID=$!
   trap 'kill "$SUDO_KEEPALIVE_PID" 2>/dev/null' EXIT
 }
