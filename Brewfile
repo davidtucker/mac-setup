@@ -36,6 +36,8 @@ brew "zsh-syntax-highlighting"
 # ── Languages ─────────────────────────────────────────────────────────────────
 brew "mise"                 # Node, Python, Java, Go, Rust; versions in home/.config/mise/config.toml
 brew "uv"                   # Python packages and virtual environments
+brew "pnpm"                 # Node package manager (a standalone binary)
+brew "go-task"              # Taskfile runner: `task` (the "task" formula is Taskwarrior)
 
 # ── AWS ───────────────────────────────────────────────────────────────────────
 brew "awscli"
@@ -49,6 +51,12 @@ brew "docker"
 brew "docker-buildx"
 brew "docker-compose"
 brew "docker-credential-helper"
+
+# ── Mobile: iOS and Android (Xcode is in the App Store section) ───────────────
+brew "watchman"             # file watcher used by React Native's bundler
+brew "cocoapods"            # iOS dependency manager
+cask "android-studio"
+cask "zulu@17"              # the JDK React Native's Android builds expect
 
 # ── Mac App Store (sign in to the App Store first) ────────────────────────────
 brew "mas"

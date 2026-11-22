@@ -31,7 +31,7 @@ describe_step() {
     packages)  echo "Apps and tools from the Brewfile" ;;
     macos)     echo "macOS settings, Touch ID for sudo, computer name" ;;
     dotfiles)  echo "Config files from home/ and your git identity" ;;
-    languages) echo "Node, Python, Java, Go and Rust (mise)" ;;
+    languages) echo "Node, Python, Java, Go, Rust and the AWS CDK (mise)" ;;
     docker)    echo "Docker on a Colima VM" ;;
     xcode)     echo "Xcode license, first launch, iOS simulator" ;;
     checklist) echo "Sign-ins and other manual steps" ;;

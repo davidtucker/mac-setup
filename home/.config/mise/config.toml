@@ -5,9 +5,13 @@
 [tools]
 node = "lts"
 python = "3.14"
-java = "temurin-25"   # current LTS
+java = "temurin-25"   # current LTS. Android projects: pin java = "zulu-17" in the project's mise.toml
 go = "latest"
 rust = "stable"
+
+# Command-line tools from npm, run with the Node above. (Homebrew's aws-cdk
+# would install a second Node.)
+"npm:aws-cdk" = "latest"   # the `cdk` command
 
 [settings]
 # Also read version files from other tools (.nvmrc, .node-version, .python-version)

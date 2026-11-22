@@ -23,6 +23,7 @@ app:Screenflick|Screenflick: enter your license and allow Screen Recording and M
 id:com.corsair.ControlCenter|Elgato Control Center: connect your lights.
 id:com.elgato.CameraHub|Elgato Camera Hub: check your camera.
 app:DaVinci Resolve|DaVinci Resolve: open it once to finish setup.
+app:Android Studio|Android Studio: run the setup wizard to download the Android SDK and an emulator.
 id:com.brave.Browser|Brave: sign in to sync, and choose your default browser.
 id:com.google.Chrome|Chrome: sign in to sync.
 -|AWS: in Ghostty, run 'aws configure sso' for each account you use.

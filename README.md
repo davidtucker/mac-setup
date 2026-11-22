@@ -54,7 +54,7 @@ to re-run once you've fixed the problem.
 | `packages` | Installs everything in the [`Brewfile`](Brewfile) |
 | `macos` | Sets the computer name, turns on Touch ID for `sudo`, and applies Finder, Dock, screenshot and typing settings ([`scripts/steps/macos.sh`](scripts/steps/macos.sh)) |
 | `dotfiles` | Links every file in [`home/`](home) into your home folder and writes your git name and email to `~/.gitconfig` |
-| `languages` | Installs Node, Python, Java, Go and Rust with [mise](https://mise.jdx.dev), at the versions in [`home/.config/mise/config.toml`](home/.config/mise/config.toml) |
+| `languages` | Installs Node, Python, Java, Go, Rust and the AWS CDK with [mise](https://mise.jdx.dev), at the versions in [`home/.config/mise/config.toml`](home/.config/mise/config.toml) |
 | `docker` | Creates a Colima VM sized to half the Mac's CPUs and memory, sets it to start at login, and points Docker at Homebrew's compose and buildx plugins |
 | `xcode` | Makes Xcode the active developer directory, accepts its license, finishes its first launch, and downloads the iOS simulator |
 | `checklist` | Lists the sign-ins and permissions you have to do by hand, and offers to open each app |
@@ -63,9 +63,10 @@ to re-run once you've fixed the problem.
 
 The [`Brewfile`](Brewfile) is the full list. In short:
 
-- **Development:** Ghostty, VS Code, Sublime Text, Xcode, Claude and Claude
-  Code, git, GitHub CLI, mise, uv, Docker CLI with Colima, AWS CLI, SAM CLI,
-  Session Manager plugin, envhaul
+- **Development:** Ghostty, VS Code, Sublime Text, Claude and Claude Code,
+  git, GitHub CLI, mise, uv, pnpm, Task, Docker CLI with Colima
+- **AWS:** AWS CLI, SAM CLI, CDK, Session Manager plugin, envhaul
+- **Mobile:** Xcode, Android Studio, Java 17 (Zulu), CocoaPods, Watchman
 - **Shell:** starship prompt, zsh autosuggestions and syntax highlighting,
   ripgrep, fd, fzf, bat, eza, zoxide, jq, yq, btop, direnv and more
 - **Work:** Microsoft 365 with Teams, Slack, Zoom, 1Password and its CLI,
@@ -105,6 +106,9 @@ macOS and these apps don't allow the rest to be scripted:
   `~/.gitconfig`, which aren't in this repo.
 - **Change a language version:** edit `home/.config/mise/config.toml`, then
   run `mise install`.
+- **Android builds:** mise makes Java 25 the default. React Native's Android
+  build expects Java 17, so add `java = "zulu-17"` to the project's
+  `mise.toml`. Builds inside Android Studio use its own bundled Java.
 - **Change your answers:** edit `~/.config/mac-setup/answers.sh`.
 
 ## Repository layout
