@@ -4,22 +4,25 @@
 step_macos() {
   set_computer_name
   enable_touch_id_for_sudo
+  enable_fast_user_switching
 
-  # Dock on the left, hidden until you point at it
-  run defaults write com.apple.dock orientation -string left
+  # Dock on the right, hidden until you point at it
+  run defaults write com.apple.dock orientation -string right
   run defaults write com.apple.dock autohide -bool true
 
   # Keep Spaces in the order you set; don't reorder them by most recent use
   run defaults write com.apple.dock mru-spaces -bool false
 
-  # Finder: show hidden files, all extensions, the path and status bars, and
-  # the full path in the title; open windows in column view
+  # Finder: show hidden files (dotfiles), all extensions, the sidebar, the
+  # path and status bars, and the full path in the title; open windows in
+  # list view
   run defaults write com.apple.finder AppleShowAllFiles -bool true
   run defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+  run defaults write com.apple.finder ShowSidebar -bool true
   run defaults write com.apple.finder ShowStatusBar -bool true
   run defaults write com.apple.finder ShowPathbar -bool true
   run defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
-  run defaults write com.apple.finder FXPreferredViewStyle -string Clmv
+  run defaults write com.apple.finder FXPreferredViewStyle -string Nlsv
   run defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
   run chflags nohidden "$HOME/Library"
 
@@ -42,6 +45,8 @@ step_macos() {
   # Screenshots go to ~/Screenshots instead of the Desktop
   run mkdir -p "$HOME/Screenshots"
   run defaults write com.apple.screencapture location -string "$HOME/Screenshots"
+
+  add_projects_folder
 
   # Restart the apps that read these settings
   local app
@@ -88,4 +93,37 @@ enable_touch_id_for_sudo() {
   fi
   printf 'auth       sufficient     pam_tid.so\n' | sudo tee -a "$file" >/dev/null
   ok "Touch ID for sudo is on (in new terminal windows)"
+}
+
+# Fast user switching, with its menu in the menu bar. MultipleSessionEnabled
+# turns the feature on; the controlcenter keys show its menu (18 = show in
+# the menu bar).
+enable_fast_user_switching() {
+  run sudo defaults write /Library/Preferences/.GlobalPreferences MultipleSessionEnabled -bool true
+  run defaults -currentHost write com.apple.controlcenter UserSwitcher -int 18
+  run defaults write com.apple.controlcenter "NSStatusItem Visible UserSwitcher" -bool true
+  did "Fast user switching is on and shown in the menu bar"
+}
+
+# ~/Projects, added to Finder's sidebar once. A marker file records that it
+# was added, so a re-run doesn't add it again (or re-add it after you remove
+# it from the sidebar yourself).
+add_projects_folder() {
+  local dir="$HOME/Projects" marker="$STATE_DIR/finder-sidebar-projects"
+  [ -d "$dir" ] || run mkdir -p "$dir"
+  if [ -f "$marker" ]; then
+    ok "$(pretty "$dir") is in Finder's sidebar"
+    return 0
+  fi
+  if dry; then
+    info "${C_DIM}[dry-run]${C_RESET} add $(pretty "$dir") to Finder's sidebar"
+    return 0
+  fi
+  if sfltool add-item com.apple.LSSharedFileList.FavoriteItems "file://$dir/" >/dev/null 2>&1; then
+    mkdir -p "$STATE_DIR"
+    touch "$marker"
+    ok "Added $(pretty "$dir") to Finder's sidebar"
+  else
+    warn "Couldn't add $(pretty "$dir") to Finder's sidebar; drag it there from Finder."
+  fi
 }

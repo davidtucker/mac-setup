@@ -87,6 +87,7 @@ cask "1password-cli"
 cask "bartender"
 cask "jump-desktop"
 cask "logos"
+cask "openlogi"                        # Logitech mouse and keyboard settings, without Options+
 cask "raycast"
 cask "spotify"
 cask "todoist-app"
