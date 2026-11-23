@@ -52,7 +52,7 @@ to re-run once you've fixed the problem.
 | `homebrew` | Installs Rosetta and Homebrew |
 | `github` | Creates `~/.ssh/id_ed25519` (no passphrase), signs in to the GitHub CLI, adds the key to your GitHub account, and switches this repo's remote to SSH |
 | `packages` | Installs everything in the [`Brewfile`](Brewfile) |
-| `macos` | Sets the computer name, turns on Touch ID for `sudo`, and applies Finder, Dock, Spaces, screenshot and typing settings ([`scripts/steps/macos.sh`](scripts/steps/macos.sh)) |
+| `macos` | Sets the computer name, turns on Touch ID for `sudo`, and turns on fast user switching, creates `~/Projects` and adds it to Finder's sidebar, and applies Finder, Dock, Spaces, screenshot and typing settings ([`scripts/steps/macos.sh`](scripts/steps/macos.sh)) |
 | `dotfiles` | Links every file in [`home/`](home) into your home folder and writes your git name and email to `~/.gitconfig` |
 | `languages` | Installs Node, Python, Java, Go, Rust and the AWS CDK with [mise](https://mise.jdx.dev), at the versions in [`home/.config/mise/config.toml`](home/.config/mise/config.toml) |
 | `docker` | Creates a Colima VM sized to half the Mac's CPUs and memory, sets it to start at login, and points Docker at Homebrew's compose and buildx plugins |
@@ -73,7 +73,7 @@ The [`Brewfile`](Brewfile) is the full list. In short:
   Todoist, Jump Desktop, Brave, Chrome
 - **Media:** Adobe Creative Cloud, DaVinci Resolve, Screenflick, Elgato
   Control Center and Camera Hub
-- **Everything else:** Raycast, Bartender, Logos, Spotify
+- **Everything else:** Raycast, Bartender, OpenLogi, Logos, Spotify
 
 ## What you still do by hand
 

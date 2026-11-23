@@ -71,3 +71,9 @@ jobs:
           test "$(git config --file "$HOME/.gitconfig" user.email)" = ci@example.com
           zsh -lic 'echo "zsh loaded"' </dev/null
           grep -q pam_tid.so /etc/pam.d/sudo_local
+          test -d "$HOME/Projects"
+          test "$(defaults read com.apple.dock orientation)" = right
+          test "$(defaults read com.apple.finder FXPreferredViewStyle)" = Nlsv
+          test "$(defaults read /Library/Preferences/.GlobalPreferences MultipleSessionEnabled)" = 1
+          # Report whether sfltool could add the sidebar item on this runner
+          ls "$HOME/.config/mac-setup/" || true
