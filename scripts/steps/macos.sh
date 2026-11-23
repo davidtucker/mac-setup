@@ -9,6 +9,9 @@ step_macos() {
   run defaults write com.apple.dock orientation -string left
   run defaults write com.apple.dock autohide -bool true
 
+  # Keep Spaces in the order you set; don't reorder them by most recent use
+  run defaults write com.apple.dock mru-spaces -bool false
+
   # Finder: show hidden files, all extensions, the path and status bars, and
   # the full path in the title; open windows in column view
   run defaults write com.apple.finder AppleShowAllFiles -bool true
